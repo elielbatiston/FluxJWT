@@ -1,1 +1,10 @@
-
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://webflux:pass@localhost:27017/webflux?authSource=admin\
+              &serverSelectionTimeoutMS=2000\
+              &connectTimeoutMS=2000"
+  security:
+    user:
+      name: admin
+      password: admin
