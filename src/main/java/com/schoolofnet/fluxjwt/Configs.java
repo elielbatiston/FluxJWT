@@ -17,6 +17,7 @@ public class Configs {
 
 	@Bean
 	public RouterFunction<ServerResponse> auth(final AuthHandler handler) {
-		return route(POST("/sign-up").and(accept(MediaType.APPLICATION_JSON)), handler::signUp);
+		return route(POST("/sign-up").and(accept(MediaType.APPLICATION_JSON)), handler::signUp)
+			.andRoute(POST("/login").and(accept(MediaType.APPLICATION_JSON)), handler::login);
 	}
 }
