@@ -12,13 +12,24 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class SecurityConfigsFilter {
 
+	private final AuthManager authManager;
+
+	private final SecurityContext securityContext;
+
+	public SecurityConfigsFilter(final AuthManager authManager, final SecurityContext securityContext) {
+		this.authManager = authManager;
+		this.securityContext = securityContext;
+	}
+
 	@Bean
 	public SecurityWebFilterChain securityWebFilterChain(final ServerHttpSecurity http) {
 		return http
 			.cors().disable()
 			.csrf().disable()
+			.authenticationManager(authManager)
+			.securityContextRepository(securityContext)
 			.authorizeExchange()
-			.pathMatchers("/sign-up/**").permitAll()
+			.pathMatchers("/sign-up/**", "/login/**").permitAll()
 			.pathMatchers(HttpMethod.OPTIONS).permitAll()
 			.anyExchange().authenticated()
 			.and()
